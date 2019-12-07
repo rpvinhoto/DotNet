@@ -1,63 +1,63 @@
-﻿using Livraria.Dominio.Interfaces.Repositorios;
-using Livraria.Dominio.Interfaces.Servicos;
+﻿using Livraria.Dominio.Interfaces.Servicos;
+using Livraria.WebApi.Interfaces.AppServicos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Livraria.Dominio.Servicos
+namespace Livraria.WebApi.AppServicos
 {
-    public class ServicoBase<TEntidade> : IServicoBase<TEntidade> where TEntidade : class
+    public class AppServicoBase<TEntidade> : IAppServicoBase<TEntidade> where TEntidade : class
     {
-        private readonly IRepositorioBase<TEntidade> _repositorio;
+        private readonly IServicoBase<TEntidade> _servicoBase;
 
-        public ServicoBase(IRepositorioBase<TEntidade> repositorio)
+        public AppServicoBase(IServicoBase<TEntidade> servicoBase)
         {
-            _repositorio = repositorio;
+            _servicoBase = servicoBase;
         }
 
         public void Adicionar(TEntidade entidade)
         {
-            _repositorio.Adicionar(entidade);
+            _servicoBase.Adicionar(entidade);
         }
 
         public async Task AdicionarAsync(TEntidade entidade)
         {
-            await _repositorio.AdicionarAsync(entidade);
+            await _servicoBase.AdicionarAsync(entidade);
         }
 
         public void Atualizar(TEntidade entidade)
         {
-            _repositorio.Atualizar(entidade);
+            _servicoBase.Atualizar(entidade);
         }
 
         public async Task AtualizarAsync(TEntidade entidade)
         {
-            await _repositorio.AtualizarAsync(entidade);
+            await _servicoBase.AtualizarAsync(entidade);
         }
 
         public bool Existe(long id)
         {
-            return _repositorio.Existe(id);
+            return _servicoBase.Existe(id);
         }
 
         public TEntidade ObterPorId(long id)
         {
-            return _repositorio.ObterPorId(id);
+            return _servicoBase.ObterPorId(id);
         }
 
         public async Task<TEntidade> ObterPorIdAsync(long id)
         {
-            return await _repositorio.ObterPorIdAsync(id);
+            return await _servicoBase.ObterPorIdAsync(id);
         }
 
         public IEnumerable<TEntidade> ObterTodos()
         {
-            return _repositorio.ObterTodos();
+            return _servicoBase.ObterTodos();
         }
 
         public void Remover(TEntidade entidade)
         {
-            _repositorio.Remover(entidade);
+            _servicoBase.Remover(entidade);
         }
 
         public void Dispose()
@@ -68,7 +68,7 @@ namespace Livraria.Dominio.Servicos
 
         protected virtual void Dispose(bool disposing)
         {
-            _repositorio.Dispose();
+            _servicoBase.Dispose();
         }
     }
 }

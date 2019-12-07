@@ -1,9 +1,9 @@
 ﻿using Livraria.Dominio.Entidades;
 using System.Collections.Generic;
 
-namespace Livraria.Dominio.Interfaces.Servicos
+namespace Livraria.WebApi.Interfaces.AppServicos
 {
-    public interface ILivroServico : IServicoBase<Livro>
+    public interface ILivroAppServico : IAppServicoBase<Livro>
     {
         IEnumerable<Livro> ObterPorTitulo(string titulo);
         IEnumerable<Livro> ObterTodosOrdenadosPorTitulo();

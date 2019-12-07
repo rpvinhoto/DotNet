@@ -6,16 +6,16 @@ namespace Livraria.Dominio.Servicos
 {
     public class EditoraServico : ServicoBase<Editora>, IEditoraServico
     {
-        private readonly IEditoraRepositorio editoraRepositorio;
+        private readonly IEditoraRepositorio _editoraRepositorio;
 
         public EditoraServico(IEditoraRepositorio editoraRepositorio) : base(editoraRepositorio)
         {
-            this.editoraRepositorio = editoraRepositorio;
+            _editoraRepositorio = editoraRepositorio;
         }
 
         public new bool Remover(Editora editora)
         {
-            return editoraRepositorio.Remover(editora);
+            return _editoraRepositorio.Remover(editora);
         }
     }
 }

@@ -6,16 +6,16 @@ namespace Livraria.Dominio.Servicos
 {
     public class CategoriaServico : ServicoBase<Categoria>, ICategoriaServico
     {
-        private readonly ICategoriaRepositorio categoriaRepositorio;
+        private readonly ICategoriaRepositorio _categoriaRepositorio;
 
         public CategoriaServico(ICategoriaRepositorio categoriaRepositorio) : base(categoriaRepositorio)
         {
-            this.categoriaRepositorio = categoriaRepositorio;
+            _categoriaRepositorio = categoriaRepositorio;
         }
 
         public new bool Remover(Categoria categoria)
         {
-            return categoriaRepositorio.Remover(categoria);
+            return _categoriaRepositorio.Remover(categoria);
         }
     }
 }

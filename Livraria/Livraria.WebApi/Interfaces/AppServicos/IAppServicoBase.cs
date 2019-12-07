@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Livraria.Dominio.Interfaces.Servicos
+namespace Livraria.WebApi.Interfaces.AppServicos
 {
-    public interface IServicoBase<TEntidade> : IDisposable where TEntidade : class
+    public interface IAppServicoBase<TEntidade> : IDisposable where TEntidade : class
     {
         void Adicionar(TEntidade entidade);
         Task AdicionarAsync(TEntidade entidade);

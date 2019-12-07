@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Livraria.Dominio.Interfaces.Repositorios
 {
     public interface IRepositorioBase<TEntidade>: IDisposable where TEntidade : class
     {
         void Adicionar(TEntidade entidade);
-
-        TEntidade ObterPorId(int id);
-
-        IEnumerable<TEntidade> ObterTodos();
-
+        Task AdicionarAsync(TEntidade entidade);
         void Atualizar(TEntidade entidade);
-
+        Task AtualizarAsync(TEntidade entidade);
+        bool Existe(long id);
+        TEntidade ObterPorId(long id);
+        Task<TEntidade> ObterPorIdAsync(long id);
+        IEnumerable<TEntidade> ObterTodos();
         void Remover(TEntidade entidade);
     }
 }
