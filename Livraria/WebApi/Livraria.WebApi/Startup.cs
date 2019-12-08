@@ -26,6 +26,7 @@ namespace Livraria.WebApi
     public class Startup
     {
         private readonly AsyncLocal<Scope> _scopeProvider = new AsyncLocal<Scope>();
+        private const string CORS = "CORS";
 
         public IConfiguration Configuration { get; }
         private IKernel Kernel { get; set; }
@@ -41,14 +42,22 @@ namespace Livraria.WebApi
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(o =>
+                .AddJsonOptions(options =>
                 {
-                    var resolver = o.SerializerSettings.ContractResolver;
+                    var resolver = options.SerializerSettings.ContractResolver;
                     if (resolver != null)
                         (resolver as DefaultContractResolver).NamingStrategy = null;
                 });
 
-            services.AddDbContext<LivrariaContext>(o => o.UseSqlServer(Configuration.GetConnectionString("LivrariaConnection")));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CORS, builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
+                });
+            });
+
+            services.AddDbContext<LivrariaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LivrariaConnection")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddRequestScopingMiddleware(() => _scopeProvider.Value = new Scope());
             services.AddCustomControllerActivation(Resolve);
@@ -65,6 +74,7 @@ namespace Livraria.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(CORS);
             app.UseMvc();
         }
 
