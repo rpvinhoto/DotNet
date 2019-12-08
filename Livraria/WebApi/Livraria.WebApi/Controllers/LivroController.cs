@@ -1,4 +1,5 @@
 ﻿using Livraria.Dominio.Entidades;
+using Livraria.Dominio.Exceptions;
 using Livraria.WebApi.Interfaces.AppServicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,10 @@ namespace Livraria.WebApi.Controllers
     public class LivroController : ControllerBase
     {
         private readonly ILivroAppServico _livroAppServico;
-        private readonly ICategoriaAppServico _categoriaAppServico;
-        private readonly IEditoraAppServico _editoraAppServico;
 
-        public LivroController(ILivroAppServico livroAppServico,
-            ICategoriaAppServico categoriaAppServico,
-            IEditoraAppServico editoraAppServico)
+        public LivroController(ILivroAppServico livroAppServico)
         {
             _livroAppServico = livroAppServico;
-            _categoriaAppServico = categoriaAppServico;
-            _editoraAppServico = editoraAppServico;
         }
 
         // GET: api/Livro
@@ -65,19 +60,15 @@ namespace Livraria.WebApi.Controllers
                 return BadRequest();
             }
 
-            if (!ExisteEditora(livro.EditoraId))
-            {
-                return NotFound("Editora não encontrada.");
-            }
-
-            if (!ExisteCategoria(livro.CategoriaId))
-            {
-                return NotFound("Categoria não encontrada.");
-            }
-
             try
             {
+                _livroAppServico.Validar(livro);
+
                 await _livroAppServico.AtualizarAsync(livro);
+            }
+            catch(DomainException de)
+            {
+                return BadRequest(de.Message);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -103,17 +94,16 @@ namespace Livraria.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!ExisteEditora(livro.EditoraId))
+            try
             {
-                return NotFound("Editora não encontrada.");
-            }
+                _livroAppServico.Validar(livro);
 
-            if (!ExisteCategoria(livro.CategoriaId))
+                await _livroAppServico.AdicionarAsync(livro);
+            }
+            catch (DomainException de)
             {
-                return NotFound("Categoria não encontrada.");
+                return BadRequest(de.Message);
             }
-
-            await _livroAppServico.AdicionarAsync(livro);
 
             return CreatedAtAction("ObterLivro", new { id = livro.LivroId }, livro);
         }
@@ -142,16 +132,6 @@ namespace Livraria.WebApi.Controllers
         private bool ExisteLivro(long id)
         {
             return _livroAppServico.ObterTodos().Any(e => e.LivroId == id);
-        }
-
-        private bool ExisteCategoria(long id)
-        {
-            return _categoriaAppServico.Existe(id);
-        }
-
-        private bool ExisteEditora(long id)
-        {
-            return _editoraAppServico.Existe(id);
         }
     }
 }

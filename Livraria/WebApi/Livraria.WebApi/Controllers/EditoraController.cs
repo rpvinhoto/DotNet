@@ -1,4 +1,5 @@
 ﻿using Livraria.Dominio.Entidades;
+using Livraria.Dominio.Exceptions;
 using Livraria.WebApi.Interfaces.AppServicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -61,8 +62,15 @@ namespace Livraria.WebApi.Controllers
 
             try
             {
+                _editoraAppServico.Validar(editora);
+
                 await _editoraAppServico.AtualizarAsync(editora);
             }
+            catch (DomainException de)
+            {
+                return BadRequest(de.Message);
+            }
+
             catch (DbUpdateConcurrencyException)
             {
                 if (!ExisteEditora(id))
@@ -87,7 +95,16 @@ namespace Livraria.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _editoraAppServico.AdicionarAsync(editora);
+            try
+            {
+                _editoraAppServico.Validar(editora);
+
+                await _editoraAppServico.AdicionarAsync(editora);
+            }
+            catch (DomainException de)
+            {
+                return BadRequest(de.Message);
+            }
 
             return CreatedAtAction("ObterEditora", new { id = editora.EditoraId }, editora);
         }

@@ -17,5 +17,10 @@ namespace Livraria.WebApi.AppServicos
         {
             return _categoriaServico.Remover(categoria);
         }
+
+        public void Validar(Categoria categoria)
+        {
+            _categoriaServico.Validar(categoria);
+        }
     }
 }

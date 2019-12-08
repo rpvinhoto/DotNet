@@ -1,5 +1,6 @@
 ﻿using Livraria.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Livraria.Dados.Contexto
 {
@@ -21,6 +22,18 @@ namespace Livraria.Dados.Contexto
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var cascadeFks = modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetForeignKeys())
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFks)
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Categoria> Categorias { get; set; }

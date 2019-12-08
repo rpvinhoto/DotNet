@@ -1,4 +1,5 @@
 ﻿using Livraria.Dominio.Entidades;
+using Livraria.Dominio.Exceptions;
 using Livraria.WebApi.Interfaces.AppServicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ namespace Livraria.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var categoria =  await _categoriaAppServico.ObterPorIdAsync(id);
+            var categoria = await _categoriaAppServico.ObterPorIdAsync(id);
 
             if (categoria == null)
             {
@@ -61,7 +62,13 @@ namespace Livraria.WebApi.Controllers
 
             try
             {
+                _categoriaAppServico.Validar(categoria);
+
                 await _categoriaAppServico.AtualizarAsync(categoria);
+            }
+            catch (DomainException de)
+            {
+                return BadRequest(de.Message);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,7 +94,16 @@ namespace Livraria.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _categoriaAppServico.AdicionarAsync(categoria);
+            try
+            {
+                _categoriaAppServico.Validar(categoria);
+
+                await _categoriaAppServico.AdicionarAsync(categoria);
+            }
+            catch (DomainException de)
+            {
+                return BadRequest(de.Message);
+            }
 
             return CreatedAtAction("ObterCategoria", new { id = categoria.CategoriaId }, categoria);
         }

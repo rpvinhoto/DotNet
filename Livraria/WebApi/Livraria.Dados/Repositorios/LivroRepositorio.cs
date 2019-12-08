@@ -12,6 +12,16 @@ namespace Livraria.Dados.Repositorios
         {
         }
 
+        public bool ExisteComCategoria(long categoriaId)
+        {
+            return _db.Livros.FirstOrDefault(l => l.CategoriaId == categoriaId) != null;
+        }
+
+        public bool ExisteComEditora(long editoraId)
+        {
+            return _db.Livros.FirstOrDefault(l => l.EditoraId == editoraId) != null;
+        }
+
         public IEnumerable<Livro> ObterPorTitulo(string titulo)
         {
             return _db.Livros.Where(l => l.Titulo.Contains(titulo));

@@ -17,5 +17,10 @@ namespace Livraria.WebApi.AppServicos
         {
             return _editoraServico.Remover(editora);
         }
+
+        public void Validar(Editora editora)
+        {
+            _editoraServico.Validar(editora);
+        }
     }
 }

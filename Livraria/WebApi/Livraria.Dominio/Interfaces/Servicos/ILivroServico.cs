@@ -7,5 +7,6 @@ namespace Livraria.Dominio.Interfaces.Servicos
     {
         IEnumerable<Livro> ObterPorTitulo(string titulo);
         IEnumerable<Livro> ObterTodosOrdenadosPorTitulo();
+        void Validar(Livro livro);
     }
 }
