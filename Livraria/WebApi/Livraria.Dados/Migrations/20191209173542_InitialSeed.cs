@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Livraria.Dados.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,6 +61,35 @@ namespace Livraria.Dados.Migrations
                         principalColumn: "EditoraId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Categoria",
+                columns: new[] { "CategoriaId", "Nome" },
+                values: new object[,]
+                {
+                    { 1L, "Ficção" },
+                    { 2L, "Fábula" },
+                    { 3L, "Biografia" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Editora",
+                columns: new[] { "EditoraId", "Nome" },
+                values: new object[,]
+                {
+                    { 1L, "Aleph" },
+                    { 2L, "Reynal & Hitchcock" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Livro",
+                columns: new[] { "LivroId", "CategoriaId", "DataPublicacao", "EditoraId", "Titulo" },
+                values: new object[] { 1L, 1L, new DateTime(1984, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, "Neuromancer" });
+
+            migrationBuilder.InsertData(
+                table: "Livro",
+                columns: new[] { "LivroId", "CategoriaId", "DataPublicacao", "EditoraId", "Titulo" },
+                values: new object[] { 2L, 2L, new DateTime(1943, 4, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 2L, "The Little Prince" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Livro_CategoriaId",
