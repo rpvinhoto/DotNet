@@ -1,7 +1,7 @@
 export class LivroDetalhes {
-    LivroId: number;
-    Titulo: string;
-    EditoraId: number;
-    CategoriaId: number;
-    DataPublicacao: Date;
+    livroId: number;
+    titulo: string;
+    editoraId: number;
+    categoriaId: number;
+    dataPublicacao: Date;
 }

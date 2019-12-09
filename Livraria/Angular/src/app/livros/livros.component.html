@@ -1,8 +1,15 @@
 <div class="container">
   <mat-toolbar>
     <span class="fill-remaining-space"></span>
-    <span>Livraria</span>
+    <span>Livros</span>
     <span class="fill-remaining-space"></span>
   </mat-toolbar>
-  <app-livro-detalhes></app-livro-detalhes>
+  <div class="row">
+      <div class="col-md-5">
+        <app-livro-detalhes></app-livro-detalhes>
+      </div>
+      <div class="col-md-7">
+        <app-livro-lista></app-livro-lista>
+      </div>
+    </div>
 </div>

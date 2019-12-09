@@ -22,11 +22,11 @@ export class LivroDetalhesComponent implements OnInit {
   }
 
   carregarTodasEditoras() {
-    this.editoraService.obterTodasEditoras();
+    this.editoraService.updateLista();
   }
 
   carregarTodasCategorias() {
-    this.categoriaService.obterTodasCategorias();
+    this.categoriaService.updateLista();
   }
 
   onClear() {

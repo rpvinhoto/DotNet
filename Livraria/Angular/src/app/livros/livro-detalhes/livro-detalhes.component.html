@@ -2,30 +2,30 @@
     <mat-grid-list cols="2" rowHeigth="300px">
         <mat-grid-tile>
             <div class="controles-container">
-                <input type="hidden" formControlName="LivroId">
+                <input type="hidden" formControlName="livroId">
                 <mat-form-field>
-                    <input formControlName="Titulo" matInput placeholder="Título*">
-                    <mat-error *ngIf="livroService.form.controls['Titulo'].errors?.required">Campo obrigatório.</mat-error>
-                    <mat-error *ngIf="livroService.form.controls['Titulo'].errors?.maxlength">Máximo 100 caracteres.</mat-error>
+                    <input formControlName="titulo" matInput placeholder="Título*">
+                    <mat-error *ngIf="livroService.form.controls['titulo'].errors?.required">Campo obrigatório.</mat-error>
+                    <mat-error *ngIf="livroService.form.controls['titulo'].errors?.maxlength">Máximo 100 caracteres.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                     <mat-select formControlName="EditoraId" placeholder="Editora*">
+                     <mat-select formControlName="editoraId" placeholder="Editora*">
                         <ng-container *ngFor="let item of editoraService.lista">
-                            <mat-option value="{{item.EditoraId}}">{{item.Nome}}</mat-option>
+                            <mat-option value="{{item.editoraId}}">{{item.nome}}</mat-option>
                         </ng-container>
                     </mat-select>
                     <mat-error>Campo obrigatório.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                        <mat-select formControlName="CategoriaId" placeholder="Categoria*">
+                        <mat-select formControlName="categoriaId" placeholder="Categoria*">
                            <ng-container *ngFor="let item of categoriaService.lista">
-                               <mat-option value="{{item.CategoriaId}}">{{item.Nome}}</mat-option>
+                               <mat-option value="{{item.categoriaId}}">{{item.nome}}</mat-option>
                            </ng-container>
                        </mat-select>
                        <mat-error>Campo obrigatório.</mat-error>
                    </mat-form-field>
                 <mat-form-field>
-                    <input formControlName="DataPublicacao" matInput [matDatepicker]="picker"
+                    <input formControlName="dataPublicacao" matInput [matDatepicker]="picker"
                         placeholder="Data da publicação">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>

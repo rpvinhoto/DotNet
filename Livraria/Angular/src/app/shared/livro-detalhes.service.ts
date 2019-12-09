@@ -7,26 +7,26 @@ import { LivroDetalhes } from '../shared/livro-detalhes.model'
   providedIn: 'root'
 })
 export class LivroDetalhesService {
-  readonly url = 'http://localhost:62982/api/livro';
+  readonly url = 'http://localhost:5000/api/livro';
   lista: LivroDetalhes[];
 
   constructor(private http: HttpClient) { }
 
   form: FormGroup = new FormGroup({
-    LivroId: new FormControl(0),
-    Titulo: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    EditoraId: new FormControl('', [Validators.required, Validators.min(1)]),
-    CategoriaId: new FormControl('', [Validators.required, Validators.min(1)]),
-    DataPublicacao: new FormControl('')
+    livroId: new FormControl(0),
+    titulo: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    editoraId: new FormControl('', [Validators.required, Validators.min(1)]),
+    categoriaId: new FormControl('', [Validators.required, Validators.min(1)]),
+    dataPublicacao: new FormControl('')
   });
 
   iniciarFormGroup() {
     this.form.setValue({
-      LivroId: 0,
-      Titulo: '',
-      EditoraId: 0,
-      CategoriaId: 0,
-      DataPublicacao: ''
+      livroId: 0,
+      titulo: '',
+      editoraId: 0,
+      categoriaId: 0,
+      dataPublicacao: ''
     });
   }
 
@@ -35,16 +35,20 @@ export class LivroDetalhesService {
   }
 
   atualizarLivro() {
-    return this.http.put(this.url + this.form.value['$id'], this.form.value);
+    return this.http.put(this.url + '/' + this.form.value['livroId'], this.form.value);
   }
 
   removerLivro(id: number) {
-    return this.http.delete(this.url + id);
+    return this.http.delete(this.url + '/' + id);
   }
 
-  atualizarLista(){
+  obterTodosLivros(){
     this.http.get(this.url)
     .toPromise()
     .then(res => this.lista = res as LivroDetalhes[]);
+  }
+
+  obterTodos() {
+    return this.http.get<LivroDetalhes[]>(this.url);
   }
 }

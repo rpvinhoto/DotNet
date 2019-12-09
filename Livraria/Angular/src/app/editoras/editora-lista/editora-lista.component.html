@@ -1,0 +1,8 @@
+<table class="table table-hover">
+  <tr *ngFor="let ed of editoraService.lista">
+    <td (click)="popularForm(ed)">{{ed.Nome}}</td>
+    <td>
+      <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ed.EditoraId)"></i>
+    </td>
+  </tr>
+</table>
