@@ -32,6 +32,12 @@ namespace Livraria.Dados.Migrations
                     b.HasKey("CategoriaId");
 
                     b.ToTable("Categoria");
+
+                    b.HasData(
+                        new { CategoriaId = 1L, Nome = "Ficção" },
+                        new { CategoriaId = 2L, Nome = "Fábula" },
+                        new { CategoriaId = 3L, Nome = "Biografia" }
+                    );
                 });
 
             modelBuilder.Entity("Livraria.Dominio.Entidades.Editora", b =>
@@ -47,6 +53,11 @@ namespace Livraria.Dados.Migrations
                     b.HasKey("EditoraId");
 
                     b.ToTable("Editora");
+
+                    b.HasData(
+                        new { EditoraId = 1L, Nome = "Aleph" },
+                        new { EditoraId = 2L, Nome = "Reynal & Hitchcock" }
+                    );
                 });
 
             modelBuilder.Entity("Livraria.Dominio.Entidades.Livro", b =>
@@ -73,6 +84,11 @@ namespace Livraria.Dados.Migrations
                     b.HasIndex("EditoraId");
 
                     b.ToTable("Livro");
+
+                    b.HasData(
+                        new { LivroId = 1L, CategoriaId = 1L, DataPublicacao = new DateTime(1984, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), EditoraId = 1L, Titulo = "Neuromancer" },
+                        new { LivroId = 2L, CategoriaId = 2L, DataPublicacao = new DateTime(1943, 4, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), EditoraId = 2L, Titulo = "The Little Prince" }
+                    );
                 });
 
             modelBuilder.Entity("Livraria.Dominio.Entidades.Livro", b =>
