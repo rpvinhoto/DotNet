@@ -1,4 +1,8 @@
 <table class="table table-hover">
+  <tr>
+    <td>Nome</td>
+    <td></td>
+  </tr>
   <tr *ngFor="let ed of editoraService.lista">
     <td (click)="popularForm(ed)">{{ed.Nome}}</td>
     <td>

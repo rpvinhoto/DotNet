@@ -1,8 +1,12 @@
 <table class="table table-hover">
-    <tr *ngFor="let ca of categoriaService.lista">
-      <td (click)="popularForm(ca)">{{ca.Nome}}</td>
-      <td>
-        <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ca.CategoriaId)"></i>
-      </td>
-    </tr>
-  </table>
+  <tr>
+    <td>Nome</td>
+    <td></td>
+  </tr>
+  <tr *ngFor="let ca of categoriaService.lista">
+    <td (click)="popularForm(ca)">{{ca.Nome}}</td>
+    <td>
+      <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(ca.CategoriaId)"></i>
+    </td>
+  </tr>
+</table>

@@ -40,7 +40,7 @@ namespace Livraria.Dominio.Servicos
             if (livro.CategoriaId == 0)
                 throw new DomainException("Campo categoria inválido.");
 
-            if (livro.DataPublicacao.HasValue && livro.DataPublicacao > DateTime.Now)
+            if (livro.DataPublicacao.HasValue && livro.DataPublicacao.Value.Date > DateTime.Now)
                 throw new DomainException("Data da publicação não pode ser uma data futura.");
         }
     }

@@ -24,7 +24,7 @@ namespace Livraria.WebApi.Controllers
         [HttpGet]
         public IEnumerable<Categoria> ObterCategorias()
         {
-            return _categoriaAppServico.ObterTodos();
+            return _categoriaAppServico.ObterTodos().OrderBy(c => c.Nome);
         }
 
         // GET: api/Categoria/5

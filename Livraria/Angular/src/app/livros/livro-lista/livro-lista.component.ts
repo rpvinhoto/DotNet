@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { LivroDetalhesService } from '../../shared/livro-detalhes.service';
+import { Component, OnInit } from '@angular/core';
+import { Livro } from '../../shared/livro.model';
+import { LivroService } from '../../shared/livro.service';
 import { EditoraService } from '../../shared/editora.service';
-import { CategoriaService } from '../../shared/categoria.service';
-import { LivroDetalhes } from 'src/app/shared/livro-detalhes.model';
+import { NotificacaoService } from '../../shared/notificacao.service';
+import { strictEqual } from 'assert';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-livro-lista',
@@ -12,57 +13,43 @@ import { LivroDetalhes } from 'src/app/shared/livro-detalhes.model';
 })
 export class LivroListaComponent implements OnInit {
 
-  constructor(private livroService: LivroDetalhesService,
+  constructor(private livroService: LivroService,
     private editoraService: EditoraService,
-    private categoriaService: CategoriaService) { }
-
-  listaRegistros: MatTableDataSource<any>;
-  displayedColumns: string[] = ['titulo', 'editora', 'categoria', 'dataPublicacao', 'acoes'];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  searchKey: string;
+    private notificacaoService: NotificacaoService) { }
 
   ngOnInit() {
-    this.livroService.obterTodos().subscribe(
-      list => {
-        let array = list;
-        this.listaRegistros = new MatTableDataSource(array);
-        this.listaRegistros.sort = this.sort;
-        this.listaRegistros.paginator = this.paginator;
-        this.listaRegistros.filterPredicate = (data, filter) => {
-          return this.displayedColumns.some(ele => {
-            return ele != 'acoes' && data[ele].toLowerCase().indexOf(filter) != -1;
-          });
-        };
-      });
+    this.livroService.updateLista();
   }
 
-  //ngOnInit() {
-  //  this.livroService.obterTodos().subscribe(data => {
-  //    console.log("data>>>>>",data);
-  //    this.listaRegistros = data.map(a:);
-  //  });
-  //  this.listaRegistros = new MatTableDataSource(this.livroService.obterTodos().subscribe());
-    //this.listaRegistros.sort = this.sort;
-    //this.listaRegistros.paginator = this.paginator;
-    //this.listaRegistros.filterPredicate = (data, filter) => {
-    //  return this.displayedColumns.some(ele => {
-    //    return ele != 'acoes' && data[ele].toLowerCase().indexOf(filter) != -1;
-    //  });
-    //};
-  //}
-
-  carregarTodosLivros(){
-    this.livroService.obterTodosLivros();
+  popularForm(liv: Livro) {
+    this.livroService.formData = Object.assign({}, liv);
   }
 
-  onSearchClear() {
-    this.searchKey = "";
-    this.filtrar();
+  obterNomeEditora(id: number): string {
+    if (id == null || id == 0)
+      return "";
+
+    var nome = "";
+
+    this.editoraService.getEditora(id).subscribe(
+      item => nome = item['Nome']);
+
+    return nome;
   }
 
-  filtrar() {
-    this.listaRegistros.filter = this.searchKey.trim().toLowerCase();
+  onDelete(id: number) {
+    if (confirm('Deseja remover esse registro?')) {
+      this.livroService.deleteLivro(id)
+        .subscribe(res => {
+          debugger;
+          this.livroService.updateLista();
+          this.notificacaoService.sucesso("Registro removido com sucesso.");
+        },
+          err => {
+            debugger;
+            console.log(err);
+            this.notificacaoService.falha(err.error);
+          })
+    }
   }
-
 }

@@ -24,7 +24,7 @@ namespace Livraria.WebApi.Controllers
         [HttpGet]
         public IEnumerable<Editora> ObterEditoras()
         {
-            return _editoraAppServico.ObterTodos();
+            return _editoraAppServico.ObterTodos().OrderBy(c => c.Nome);
         }
 
         // GET: api/Editora/5

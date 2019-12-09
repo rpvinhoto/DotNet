@@ -21,6 +21,16 @@ namespace Livraria.WebApi.AppServicos
             _categoriaServico = categoriaServico;
         }
 
+        private bool ExisteCategoria(long id)
+        {
+            return _categoriaServico.Existe(id);
+        }
+
+        private bool ExisteEditora(long id)
+        {
+            return _editoraServico.Existe(id);
+        }
+
         public IEnumerable<Livro> ObterPorTitulo(string titulo)
         {
             return _livroServico.ObterPorTitulo(titulo);
@@ -40,16 +50,6 @@ namespace Livraria.WebApi.AppServicos
 
             if (!ExisteCategoria(livro.CategoriaId))
                 throw new DomainException("Categoria não encontrada.");
-        }
-
-        private bool ExisteCategoria(long id)
-        {
-            return _categoriaServico.Existe(id);
-        }
-
-        private bool ExisteEditora(long id)
-        {
-            return _editoraServico.Existe(id);
         }
     }
 }

@@ -8,9 +8,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LivrosComponent } from './livros/livros.component';
-import { LivroDetalhesComponent } from './livros/livro-detalhes/livro-detalhes.component';
+import { LivroComponent } from './livros/livro/livro.component';
 import { LivroListaComponent } from './livros/livro-lista/livro-lista.component';
-import { LivroDetalhesService } from './shared/livro-detalhes.service';
+import { LivroService } from './shared/livro.service';
 import { EditoraService } from './shared/editora.service';
 import { CategoriaService } from './shared/categoria.service';
 import { EditorasComponent } from './editoras/editoras.component';
@@ -27,7 +27,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
   declarations: [
     AppComponent,
     LivrosComponent,
-    LivroDetalhesComponent,
+    LivroComponent,
     LivroListaComponent,
     EditorasComponent,
     EditoraComponent,
@@ -48,7 +48,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     HttpClientModule,
     RoutingModule
   ],
-  providers: [LivroDetalhesService, EditoraService, CategoriaService],
+  providers: [LivroService, EditoraService, CategoriaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

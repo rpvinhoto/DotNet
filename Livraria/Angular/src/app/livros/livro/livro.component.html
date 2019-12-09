@@ -1,0 +1,44 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="LivroId" [value]="livroService.formData.LivroId">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text bg-white">
+                    <i class="fas fa-book" [class.green-icon]="Titulo.valid"
+                        [class.red-icon]="Titulo.invalid && Titulo.touched"></i>
+                </div>
+            </div>
+            <input name="Titulo" #Titulo="ngModel" [(ngModel)]="livroService.formData.Titulo" class="form-control"
+                placeholder="Título" required maxlength="100">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <select name="EditoraId" #EditoraId="ngModel" [(ngModel)]="livroService.formData.EditoraId"
+                class="form-control" required>
+                <option value="null">Selecione a editora</option>
+                <option *ngFor="let edi of editoraService.lista" value={{edi.EditoraId}}>{{edi.Nome}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <select name="CategoriaId" #CategoriaId="ngModel" [(ngModel)]="livroService.formData.CategoriaId"
+                class="form-control" required>
+                <option value="null">Selecione a categoria</option>
+                <option *ngFor="let cat of categoriaService.lista" value={{cat.CategoriaId}}>{{cat.Nome}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="DataPublicacao" #DataPublicacao="ngModel" [(ngModel)]="livroService.formData.DataPublicacao"
+                matInput [matDatepicker]="picker" placeholder="Data da publicação" class="form-control">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+    </div>
+    <div class="form-group">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Salvar</button>
+    </div>
+</form>

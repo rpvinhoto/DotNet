@@ -13,6 +13,10 @@ export class EditoraService {
 
   constructor(private http: HttpClient) { }
 
+  getEditora(id: number) {
+    return this.http.get(this.url + '/'+ id);
+  }
+
   postEditora() {
     return this.http.post(this.url, this.formData);
   }
