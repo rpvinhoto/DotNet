@@ -1,3 +1,3 @@
 # Projects
-Game
-Livraria
+- Game
+- Livraria
